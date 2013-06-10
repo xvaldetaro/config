@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ "$CONFIG_DIR" == "" ]; then
-	export CONFIG_DIR=$HOME/config
+	export CONFIG_DIR=$HOME/apps/config
 	echo CONFIG_DIR not set, deafulting to $CONFIG_DIR
 fi
 if [ "$APPS_DIR" == "" ]; then
