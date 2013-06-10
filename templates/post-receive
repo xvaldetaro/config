@@ -24,8 +24,9 @@ git checkout -f
 echo checked out work tree successfully
 
 echo now installing python requirements with pip
-source $APP_DIR/activate_venv
+source $APP_DIR/venv/bin/activate
 pip install -r $GIT_WORK_TREE/requirements.txt
+pip install setproctitle
 
 echo Script ran successfully.
 echo NOW please make sure that the ENV files are correctly placed inside $APP_DIR/globals

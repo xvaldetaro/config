@@ -37,21 +37,34 @@ echo creating virtualenv...
 virtualenv --distribute $APP_DIR/venv
 echo linking virtualenv activate script
 
-ln -f -s $APP_DIR/venv/bin/activate $APP_DIR/activate_venv
-ln -f -s $APP_DIR/globals/prod.sh $APP_DIR/load_prod_env
-ln -f -s $APP_DIR/globals/local.sh $APP_DIR/load_local_env
+ln -f -s $APP_DIR/venv/bin/activate $PROJ_DIR/activate_venv
+ln -f -s $APP_DIR/globals/prod.sh $PROJ_DIR/load_prod_env
+ln -f -s $APP_DIR/globals/local.sh $PROJ_DIR/load_local_env
 
 echo Copying customized scripts...
 
 sed -e "s@<proj_name>@"$PROJ_NAME"@" \
 -e "s@<app_port>@"$APP_PORT"@" \
+-e "s@<log_dir>@"$APP_DIR/logs"@" \
+-e "s@<user>@"$PROPER_USER"@" \
+$CONFIG_DIR/templates/gunicorn_prod.py >> \
+$PROJ_DIR/gunicorn_prod.py
+
+sed -e "s@<proj_name>@"$PROJ_NAME"@" \
+-e "s@<app_port>@"$APP_PORT"@" \
+-e "s@<log_dir>@"$APP_DIR/logs"@" \
+-e "s@<user>@"$PROPER_USER"@" \
+$CONFIG_DIR/templates/gunicorn_local.py >> \
+$PROJ_DIR/gunicorn_local.py
+
+sed -e "s@<proj_name>@"$PROJ_NAME"@" \
+-e "s@<proj_dir>@"$PROJ_DIR"@" \
+-e "s@<app_dir>@"$APP_DIR"@" \
+-e "s@<venv_file>@"$APP_DIR/venv/bin/activate"@" \
 $CONFIG_DIR/templates/launch_gunicorn.sh >> \
-$APP_DIR/launch_gunicorn.sh
+$PROJ_DIR/launch_gunicorn.sh
 
-chmod 755 $APP_DIR/launch_gunicorn.sh
-
-cp $CONFIG_DIR/templates/local_activate.sh $PROJ_DIR
-cp $CONFIG_DIR/templates/prod_activate.sh $PROJ_DIR
+chmod 755 $PROJ_DIR/launch_gunicorn.sh
 
 sed -e "s@<proj_name>@"$PROJ_NAME"@" \
 $CONFIG_DIR/templates/cleardb.sh >> \

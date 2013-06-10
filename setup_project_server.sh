@@ -72,8 +72,8 @@ echo Creating upstart customized entries
 sudo rm -f /etc/init/$DOMAIN.conf
 
 sudo sed -e "s@<user>@"$PROPER_USER"@" \
--e "s@<script>@"$APP_DIR"/launch_gunicorn@" \
--e "s@<params>@"$APP_PORT"@" \
+-e "s@<script>@"$PROJ_DIR"/launch_gunicorn.sh@" \
+-e "s@<params>@prod@" \
 $CONFIG_DIR/templates/upstart_process.conf \
 >> /etc/init/$DOMAIN.conf
 

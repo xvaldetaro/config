@@ -1,15 +1,11 @@
 #!/bin/bash
-PROPER_USER=$USER
-if [ "$USER" == "root" ]; then
-	echo Running as root, settings PROPER_USER to $SUDO_USER
-	PROPER_USER=$SUDO_USER
+if [ "$1" == "" ]; then
+	echo Error, must specify MODE to launch_gunicorn.sh
+	exit 0
 fi
-set -e
-NUM_WORKERS=3
+LAUNCH_MODE=$1
+source <venv_file>
+source <globals_dir>/$LAUNCH_MODE.sh
 
-LOG_FILE=logs/<proj_name>.log
-source activate_venv
-source load_prod_env.sh
-
-gunicorn -b 127.0.0.1:<app_port> \
--w $NUM_WORKERS --user=$PROPER_USER --log-level=$LOG_LEVEL --log-file=$LOG_FILE <proj_name>
+cd <proj_dir>
+gunicorn -c <proj_dir>/gunicorn_$LAUNCH_MODE.py <proj_name>.wsgi
