@@ -1,0 +1,12 @@
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install openssh-server
+
+rodar 2_install_postgres.sh
+install nginx
+criar upstart conf para nginx
+setar o user no /etc/nginx/nginx.conf para user correto
+install git
+copiar ssh para home git: 
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/your_pemfile.pem ubuntu@your_ip_addr "cat>> .ssh/authorized_keys"
+rodar o setup_python.sh

@@ -1,0 +1,31 @@
+#!/bin/bash
+# Discover the repository name
+if [ $(git rev-parse --is-bare-repository) = true ]
+then
+    REPOSITORY_BASENAME=$(basename "$PWD")
+    REPOSITORY_BASENAME=${REPOSITORY_BASENAME%.git} 
+else
+    REPOSITORY_BASENAME=$(basename $(readlink -nf "$PWD"/..))
+fi
+echo REPOSITORY_BASENAME is $REPOSITORY_BASENAME
+
+APP_DIR=$HOME/apps/$REPOSITORY_BASENAME
+
+# create app folder structure
+if [ ! -d "$APP_DIR" ]; then
+  echo $APP_DIR does not exist, please run setup_project_server.sh first
+fi
+echo Folder structure is correct
+
+echo checking out git work tree to $APP_DIR/$REPOSITORY_BASENAME
+GIT_WORK_TREE=$APP_DIR/$REPOSITORY_BASENAME
+export GIT_WORK_TREE
+git checkout -f
+echo checked out work tree successfully
+
+echo now installing python requirements with pip
+source $APP_DIR/activate_venv
+pip install -r $GIT_WORK_TREE/requirements.txt
+
+echo Script ran successfully.
+echo NOW please make sure that the ENV files are correctly placed inside $APP_DIR/globals

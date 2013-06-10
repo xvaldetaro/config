@@ -1,0 +1,17 @@
+rodar git_repo_create.sh
+colocar o arquivos de env dentro do apps/globals
+chmod 400 nos arquivos de env
+
+criar user e database no postgres:
+sudo passwd postgres
+su postgres
+createuser -P <proj_name>
+createdb -O <proj_name> -E UTF8 <proj_name>
+
+su git
+criar o repo bare do projeto em /home/git/repos/<proj_name>.git
+criar o hook que faz checkout para apps/project, instala requirements e start/stop collect static(common must be there)
+
+criar o .conf no /etc/init pro upstart com user www
+
+adicionar server no sites-available e sites-enabled do nginx
