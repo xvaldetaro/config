@@ -1,19 +1,31 @@
-if [ "$1" == "" ]; then
-	echo no project dir
-	exit 0
+#!/bin/bash
+if [ "$CONFIG_DIR" == "" ]; then
+	export CONFIG_DIR=$HOME/config
+	echo CONFIG_DIR not set, deafulting to $CONFIG_DIR
 fi
-if [ "$2" == "" ]; then
+if [ "$APPS_DIR" == "" ]; then
+	export APPS_DIR=$HOME/apps
+	echo APPS_DIR not set, deafulting to $APPS_DIR
+fi
+
+if [ "$1" == "" ]; then
 	echo no project name
 	exit 0
 fi
-APP_PORT=$3
-if [ "$3" == "" ]; then
+APP_PORT=$2
+if [ "$2" == "" ]; then
 	echo No app port provided, using 8000
 	APP_PORT=8000
 fi
 
-APP_DIR=$1
-PROJ_NAME=$2
+PROPER_USER=$USER
+if [ "$USER" == "root" ]; then
+	echo Running as root, settings PROPER_USER to $SUDO_USER
+	PROPER_USER=$SUDO_USER
+fi
+
+PROJ_NAME=$1
+APP_DIR=$APPS_DIR/$PROJ_NAME
 PROJ_DIR=$APP_DIR/$PROJ_NAME
 
 echo App folder structure Creating now...
@@ -48,3 +60,8 @@ $PROJ_DIR/cleardb.sh
 chmod -R 755 $PROJ_DIR
 
 echo Successfully created the app folder structure with scripts
+
+if [ "$USER" == "root" ]; then
+	echo Since ran as root, setting proper owner now.
+	chown -R $PROPER_USER $APP_DIR
+fi

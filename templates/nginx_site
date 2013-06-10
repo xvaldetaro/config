@@ -4,7 +4,7 @@ server {
 
     location /static/ { # STATIC_URL
         autoindex on;
-        alias <proj_dir>/static/; # STATIC_ROOT
+        alias <app_dir>/static/; # STATIC_ROOT
     }
 
     location / {
@@ -20,6 +20,6 @@ server {
     # what to serve if upstream is not available or crashes
     error_page 500 502 503 504 /media/50x.html;
 
-    access_log      <proj_dir>/logs/caiubem.access_log;
-    error_log       <proj_dir>/logs/caiubem.error_log;
+    access_log      <app_dir>/logs/caiubem.access_log;
+    error_log       <app_dir>/logs/caiubem.error_log;
 }
