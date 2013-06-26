@@ -1,4 +1,6 @@
-rodar git_repo_create.sh
+NO SERVER: rodar setup_project_server.sh
+NO DEV: rodar create_app_folder.sh
+
 colocar o arquivos de env dentro do apps/globals
 chmod 400 nos arquivos de env
 
@@ -8,13 +10,8 @@ su postgres
 createuser -P <proj_name>
 createdb -O <proj_name> -E UTF8 <proj_name>
 
-su git
-criar o repo bare do projeto em /home/git/repos/<proj_name>.git
-criar o hook que faz checkout para apps/project, instala requirements e start/stop collect static(common must be there)
+------- PARA DEV ---------
 
-criar o .conf no /etc/init pro upstart com user www
-
-adicionar server no sites-available e sites-enabled do nginx
 
 apps/ - general apps folder
 	projname/ - complete project folder
@@ -23,4 +20,3 @@ apps/ - general apps folder
 			globals/ - environment scripts (sets secret keys and passwords)
 			static/ - where to collect all the static files
 			logs/ - where to point all the logging to
-			
