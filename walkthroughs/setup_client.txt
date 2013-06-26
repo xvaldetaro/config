@@ -1,0 +1,12 @@
+-- Workstation setup
+ssh-keygen -t rsa -C "email"
+cat ~/.ssh/id_rsa.pub | ssh -i ~/microzinha_key.pem ubuntu@caiubem.com.br "cat>> .ssh/authorized_keys"
+log em ssh e copie as authorized_keys do ubuntu pra xande
+chown na authorized_keys de xande
+git remote add ec2 xande@caiubem.com.br:/home/xande/repos/caiubem.git
+
+--- deploy:
+source activate_env
+source load_prod_env
+python manage.py collectstatic
+git push ec2 master
