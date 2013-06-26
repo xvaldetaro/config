@@ -15,3 +15,12 @@ criar o hook que faz checkout para apps/project, instala requirements e start/st
 criar o .conf no /etc/init pro upstart com user www
 
 adicionar server no sites-available e sites-enabled do nginx
+
+apps/ - general apps folder
+	projname/ - complete project folder
+			projname/ - web app folder
+			venv/ - virtual environment folder
+			globals/ - environment scripts (sets secret keys and passwords)
+			static/ - where to collect all the static files
+			logs/ - where to point all the logging to
+			
